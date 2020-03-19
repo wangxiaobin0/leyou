@@ -1,0 +1,6 @@
+spring:
+  zipkin:
+    base-url: http://112.126.59.115:9411
+    sleuth:
+      sampler:
+        probability: 1
