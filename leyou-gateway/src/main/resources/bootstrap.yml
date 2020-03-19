@@ -14,8 +14,8 @@ spring:
           predicates:
             - Path=/eureka/**
     config:
-      #uri: http://112.126.59.115:3344
-      uri: http://localhost:3344
+      uri: http://112.126.59.115:3344
+      #uri: http://localhost:3344
       label: master
       profile: ${spring.profiles.active}
       name: registry,zipkin
