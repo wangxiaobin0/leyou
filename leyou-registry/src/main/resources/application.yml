@@ -8,6 +8,10 @@ spring:
     name: leyou-registry
 
 eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${eureka.instance.hostname}:${server.port}
   client:
     fetch-registry: true
     register-with-eureka: true
@@ -18,3 +22,4 @@ eureka:
     enable-self-preservation: false
     #每隔5秒清理一次服务列表
     eviction-interval-timer-in-ms: 5000
+

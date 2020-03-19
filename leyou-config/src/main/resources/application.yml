@@ -21,9 +21,12 @@ spring:
           force-pull: true
       label: master
 eureka:
+  instance:
+    prefer-ip-address: true
+    hostname: ${spring.cloud.client.ip-address}
+    instance-id: ${eureka.instance.hostname}:${server.port}
   client:
     fetch-registry: true
     register-with-eureka: true
     service-url:
       defaultZone: http://172.17.40.83:7001/eureka/
-      #defaultZone: http://localhost:7001/eureka/
