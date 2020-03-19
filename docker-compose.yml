@@ -1,0 +1,14 @@
+version: "3.1"
+services:
+  leyou-config:
+    restart: always
+    image: leyouconfig
+    container_name: leyouConfig
+    ports:
+    - 3344:3344
+  leyou-registry:
+    restart: always
+    image: leyouregistry
+    container_name: leyouRegistry
+    ports:
+    - 7001:7001

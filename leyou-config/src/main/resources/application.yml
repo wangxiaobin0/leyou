@@ -17,7 +17,7 @@ spring:
           uri: https://gitee.com/gitteejava/leyou.git
           username: 1378975974@qq.com
           password: 1378975974@Wxb
-          search-paths: itoken-config/config/
+          search-paths: leyou-config/config/
           force-pull: true
       label: master
 eureka:
@@ -26,3 +26,4 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://172.17.40.83:7001/eureka/
+      #defaultZone: http://localhost:7001/eureka/

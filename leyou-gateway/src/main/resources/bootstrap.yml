@@ -1,0 +1,23 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: leyou-gateway
+  profiles:
+    active: dev
+  cloud:
+    gateway:
+      routes:
+        - id: leyou-registry
+          uri: lb://leyou-registry
+          predicates:
+            - Path=/eureka/**
+    config:
+      #uri: http://112.126.59.115:3344
+      uri: http://localhost:3344
+      label: master
+      profile: ${spring.profiles.active}
+      name: registry,zipkin
+
+
