@@ -24,7 +24,12 @@ spring:
           #请求URI
           '[/**]':
             #允许的请求头origin
-            allowedOrigins: "http://127.0.0.1:9001"
+            allowedOrigins:
+              - "http://localhost:9001"
+              - "http://127.0.0.1:9001"
+            #允许的请求头
+            allowedHeaders:
+              - "*"
             #允许的请求方式
             allowedMethods:
               - GET
