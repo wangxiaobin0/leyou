@@ -2,13 +2,12 @@ package com.leyou.item.service.controller;
 
 import com.leyou.common.api.domain.PageResult;
 import com.leyou.item.api.domain.Brand;
+import com.leyou.item.api.dto.BrandDTO;
 import com.leyou.item.service.service.IBrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,5 +31,21 @@ public class BrandController {
         System.out.println("查库");
         PageResult<Brand> brandList = brandService.getBrandListTurnPage(key, page, rows, sortBy, desc);
         return ResponseEntity.ok(brandList);
+    }
+
+    @PostMapping
+    public ResponseEntity postBrand(Brand brand, @RequestParam("cids") List<Long> cids) {
+        brandService.postBrand(brand, cids);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @PutMapping
+    public ResponseEntity putBrand(Brand brand, @RequestParam("cids") List<Long> cids) {
+        brandService.putBrand(brand, cids);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+    @DeleteMapping("/{bid}")
+    public ResponseEntity deleteBrand(@PathVariable("bid") Long bid){
+        brandService.deleteBrand(bid);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

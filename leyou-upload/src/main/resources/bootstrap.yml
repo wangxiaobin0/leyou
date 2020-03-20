@@ -1,0 +1,28 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: leyou-upload
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://112.126.59.115:3344
+      label: master
+      profile: ${spring.profiles.active}
+      name: registry,zipkin
+
+  servlet:
+    multipart:
+      # 单次上传最大文件数
+      max-request-size: 5MB
+      #最大文件大小
+      max-file-size: 1024MB
+      #文件路径
+      location:
+#FastDFS配置
+fdfs:
+  #连接超时时间
+  connect-timeout: 1501
+  tracker-list:
+    - 112.126.59.115:22122

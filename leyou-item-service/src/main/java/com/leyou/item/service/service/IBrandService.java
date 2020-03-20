@@ -2,6 +2,8 @@ package com.leyou.item.service.service;
 
 import com.leyou.common.api.domain.PageResult;
 import com.leyou.item.api.domain.Brand;
+import com.leyou.item.api.dto.BrandDTO;
+import org.springframework.web.bind.annotation.RequestParam;
 import sun.rmi.runtime.Log;
 
 import java.util.List;
@@ -21,4 +23,15 @@ public interface IBrandService {
      * @return
      */
     PageResult<Brand> getBrandListTurnPage(String key, Integer page, Integer rows, String sortBy, Boolean desc);
+
+    /**
+     *
+     * @param brand
+     * @param cids
+     */
+    void postBrand(Brand brand, List<Long> cids);
+
+    void deleteBrand(Long bid);
+
+    void putBrand(Brand brand, List<Long> cids);
 }

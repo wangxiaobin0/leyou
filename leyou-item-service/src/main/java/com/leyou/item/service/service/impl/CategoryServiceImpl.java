@@ -26,4 +26,10 @@ public class CategoryServiceImpl implements ICategoryService {
         category.setParentId(parentId);
         return categoryDao.select(category);
     }
+
+    @Override
+    public List<Category> getCategoryByBrandId(Long bid) {
+        List<Category> categoryList = categoryDao.getCategoryByBrandId(bid);
+        return categoryList;
+    }
 }

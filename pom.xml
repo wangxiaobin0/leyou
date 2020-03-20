@@ -15,6 +15,7 @@
         <module>leyou-item-api</module>
         <module>leyou-item-service</module>
         <module>leyou-common-api</module>
+        <module>leyou-upload</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -45,6 +46,8 @@
         <hutools.version>5.1.0</hutools.version>
         <!--Junit-->
         <junit.version>4.12</junit.version>
+        <!--fastDFS-->
+        <fastdfs.client.version>1.26.2</fastdfs.client.version>
     </properties>
 
     <dependencyManagement>
@@ -121,6 +124,13 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
+            <!--FastDFS-->
+            <dependency>
+                <groupId>com.github.tobato</groupId>
+                <artifactId>fastdfs-client</artifactId>
+                <version>${fastdfs.client.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

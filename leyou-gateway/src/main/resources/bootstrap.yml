@@ -17,6 +17,10 @@ spring:
           uri: lb://leyou-item
           predicates:
             - Path=/item/**
+        - id: leyou-upload
+          uri: lb://leyou-upload
+          predicates:
+            - Path=/upload/**
       #全局跨域请求
       globalcors:
         #请求配置
