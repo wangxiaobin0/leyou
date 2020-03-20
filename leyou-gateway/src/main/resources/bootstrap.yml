@@ -13,6 +13,26 @@ spring:
           uri: lb://leyou-registry
           predicates:
             - Path=/eureka/**
+        - id: leyou-item
+          uri: lb://leyou-item
+          predicates:
+            - Path=/item/**
+      #全局跨域请求
+      globalcors:
+        #请求配置
+        cors-configurations:
+          #请求URI
+          '[/**]':
+            #允许的请求头origin
+            allowedOrigins: "http://127.0.0.1:9001"
+            #允许的请求方式
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - PATCH
+              - HEAD
     config:
       uri: http://112.126.59.115:3344
       #uri: http://localhost:3344
