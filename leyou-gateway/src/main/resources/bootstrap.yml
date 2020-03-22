@@ -31,6 +31,8 @@ spring:
             allowedOrigins:
               - "http://localhost:9001"
               - "http://127.0.0.1:9001"
+              - "http://localhost:9002"
+              - "http://127.0.0.1:9003"
             #允许的请求头
             allowedHeaders:
               - "*"

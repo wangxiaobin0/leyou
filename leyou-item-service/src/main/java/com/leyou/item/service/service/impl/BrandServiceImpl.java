@@ -77,4 +77,10 @@ public class BrandServiceImpl implements IBrandService {
         brandDao.delete(brand);
         brandDao.deleteBrandCategory(bid);
     }
+
+    @Override
+    public List<Brand> getBrandByCategoryId(Long cid) {
+        List<Brand> brandList = brandDao.getBrandByCategoryId(cid);
+        return brandList;
+    }
 }

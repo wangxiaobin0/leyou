@@ -23,4 +23,11 @@ public interface ICategoryService {
      * @return
      */
     List<Category> getCategoryByBrandId(Long bid);
+
+    /**
+     * 根据id集合查询分类名
+     * @param ids
+     * @return
+     */
+    List<String> getCategoryNameByIds(List<Long> ids);
 }

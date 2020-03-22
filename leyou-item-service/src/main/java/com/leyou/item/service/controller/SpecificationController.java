@@ -16,7 +16,7 @@ import java.util.List;
  * @date 2020/3/21
  */
 @RestController
-@RequestMapping("/spec")
+    @RequestMapping("/spec")
 public class SpecificationController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class SpecificationController {
 
     /**
      * 根据分类id查询规格参数分组
-     *  SPU: Standard Product Unit 标准化产品单元. 商品聚合的最小单元,是SKU的集合
+     *  Spu: Standard Product Unit 标准化产品单元. 商品聚合的最小单元,是SKU的集合
      *  SKU: Stock Keeping Unit     库存两单元.    商品的最小不可分割单元.
      *  通俗的讲, SPU是某一款具体产品的集合.   SKU是SPU的不同实例.
      *             比如: iPhone 11就是SPU.  不同版本是SKU
@@ -75,9 +75,17 @@ public class SpecificationController {
      * @param gid
      * @return
      */
-    @GetMapping("/params/{gid}")
-    public ResponseEntity<List<SpecificationParam>> getSpecificationParamByGroupId(@PathVariable("gid") Long gid) {
-        List<SpecificationParam> specificationParamList = specificationService.getSpecificationParamByGroupId(gid);
+    @GetMapping("/params")
+    public ResponseEntity<List<SpecificationParam>> getSpecificationParamByGroupId(@RequestParam(value = "gid", required = false) Long gid,
+                                                                                   @RequestParam(value = "cid", required = false) Long cid
+                                                                                   //@RequestParam(value = "generic", required = false) Boolean generic,
+                                                                                   //@RequestParam(value = "searching", required = false)  Boolean searching
+    ) {
+        List<SpecificationParam> specificationParamList = specificationService.getSpecificationParamByGroupId(gid, cid);
+
+        if (specificationParamList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
         return ResponseEntity.ok(specificationParamList);
     }
 

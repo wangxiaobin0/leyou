@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import tk.mybatis.mapper.common.Mapper;
 
+import java.util.List;
+
 /**
  * @author
  * @date 2020/3/19
@@ -29,4 +31,7 @@ public interface IBrandDao extends Mapper<Brand> {
      */
     @Delete("delete from tb_category_brand where brand_id = #{bid}")
     void deleteBrandCategory(@Param("bid") Long bid);
+
+    @Select("select * from tb_brand a left join tb_category_brand b on a.id = b.brand_id where b.category_id = #{cid}")
+    List<Brand> getBrandByCategoryId(@Param("cid") Long cid);
 }

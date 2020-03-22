@@ -48,4 +48,10 @@ public class BrandController {
         brandService.deleteBrand(bid);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @GetMapping("/cid/{cid}")
+    public ResponseEntity<List<Brand>> getBrandByCategoryId(@PathVariable("cid") Long cid){
+        List<Brand> brandList = brandService.getBrandByCategoryId(cid);
+        return ResponseEntity.ok(brandList);
+    }
 }

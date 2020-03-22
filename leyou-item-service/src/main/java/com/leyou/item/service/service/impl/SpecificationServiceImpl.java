@@ -57,10 +57,19 @@ public class SpecificationServiceImpl implements ISpecificationService {
     }
 
     @Override
-    public List<SpecificationParam> getSpecificationParamByGroupId(Long gid) {
+    public List<SpecificationParam> getSpecificationParamByGroupId(Long gid, Long cid) {
         Example example = new Example(SpecificationParam.class);
         Example.Criteria criteria = example.createCriteria();
-        criteria.andEqualTo("group_id", gid);
+        if (gid != null) {
+            //根据分组id查询参数
+            criteria.andEqualTo("group_id", gid);
+        }
+        if (cid != null) {
+            //根据分类id查询参数
+            criteria.andEqualTo("cid", cid);
+        }
+
+
         List<SpecificationParam> specificationParamList = specificationParamDao.selectByExample(example);
         return specificationParamList;
     }
