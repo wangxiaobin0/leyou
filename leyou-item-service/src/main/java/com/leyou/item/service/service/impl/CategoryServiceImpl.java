@@ -3,13 +3,12 @@ package com.leyou.item.service.service.impl;
 import com.leyou.item.api.domain.Category;
 import com.leyou.item.service.dao.ICategoryDao;
 import com.leyou.item.service.service.ICategoryService;
-import com.sun.deploy.net.proxy.pac.PACFunctions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -46,5 +45,14 @@ public class CategoryServiceImpl implements ICategoryService {
             names.add(category.getName());
         }
         return names;
+    }
+
+    @Override
+    public List<Category> getCategoryNameById(Long id) {
+        Category category3 = categoryDao.selectByPrimaryKey(id);
+        Category category2 = categoryDao.selectByPrimaryKey(category3.getParentId());
+        Category category = categoryDao.selectByPrimaryKey(category2.getParentId());
+
+        return Arrays.asList(category, category2, category3);
     }
 }

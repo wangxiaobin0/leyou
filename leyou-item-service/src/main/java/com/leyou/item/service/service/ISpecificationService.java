@@ -41,7 +41,7 @@ public interface ISpecificationService {
      * @param gid
      * @return
      */
-    List<SpecificationParam> getSpecificationParamByGroupId(Long gid, Long cid);
+    List<SpecificationParam> getSpecificationParamByGroupId(Long gid, Long cid, Boolean generic, Boolean searching);
 
     /**
      * 新增分组参数

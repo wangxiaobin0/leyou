@@ -16,7 +16,8 @@ eureka:
     fetch-registry: true
     register-with-eureka: true
     service-url:
-      defaultZone: http://172.17.40.83:7001/eureka/
+      defaultZone: http://localhost:7001/eureka/
+      #defaultZone: http://172.17.40.83:7001/eureka/
   server:
     #关闭自我保护机制
     enable-self-preservation: false

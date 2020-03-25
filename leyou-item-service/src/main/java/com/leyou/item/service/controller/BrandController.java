@@ -54,4 +54,11 @@ public class BrandController {
         List<Brand> brandList = brandService.getBrandByCategoryId(cid);
         return ResponseEntity.ok(brandList);
     }
+
+    @GetMapping("/ids")
+    public ResponseEntity<List<Brand>> getBrandByIds(@RequestParam("ids") List<Long> ids) {
+        List<Brand> brandList =  brandService.getBrandByIds(ids);
+        return ResponseEntity.ok(brandList);
+    }
+
 }

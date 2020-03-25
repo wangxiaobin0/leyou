@@ -21,29 +21,28 @@ spring:
           uri: lb://leyou-upload
           predicates:
             - Path=/upload/**
+        - id: leyou-search
+          uri: lb://leyou-search
+          predicates:
+            - Path=/search/**
       #全局跨域请求
       globalcors:
         #请求配置
         cors-configurations:
           #请求URI
           '[/**]':
+            #allowCredentials: true
             #允许的请求头origin
-            allowedOrigins:
-              - "http://localhost:9001"
-              - "http://127.0.0.1:9001"
-              - "http://localhost:9002"
-              - "http://127.0.0.1:9003"
-            #允许的请求头
             allowedHeaders:
               - "*"
-            #允许的请求方式
+            allowedOrigins:
+              - "*"
             allowedMethods:
               - GET
               - POST
-              - PUT
               - DELETE
-              - PATCH
-              - HEAD
+              - PUT
+              - OPTIONS
     config:
       uri: http://112.126.59.115:3344
       #uri: http://localhost:3344

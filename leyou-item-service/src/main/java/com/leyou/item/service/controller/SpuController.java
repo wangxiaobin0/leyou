@@ -31,7 +31,7 @@ public class SpuController {
     }
 
     @GetMapping("/detail/{spuId}")
-    public ResponseEntity getSpuDetail(@PathVariable("spuId") Long spuId) {
+    public ResponseEntity<SpuDetail> getSpuDetail(@PathVariable("spuId") Long spuId) {
         SpuDetail spuDetail = spuService.getSpuDetail(spuId);
         return ResponseEntity.ok(spuDetail);
     }

@@ -36,4 +36,6 @@ public interface IBrandService {
     void putBrand(Brand brand, List<Long> cids);
 
     List<Brand> getBrandByCategoryId(Long cid);
+
+    List<Brand> getBrandByIds(List<Long> ids);
 }

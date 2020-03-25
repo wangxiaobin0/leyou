@@ -16,6 +16,7 @@
         <module>leyou-item-service</module>
         <module>leyou-common-api</module>
         <module>leyou-upload</module>
+        <module>leyou-search</module>
     </modules>
     <packaging>pom</packaging>
 

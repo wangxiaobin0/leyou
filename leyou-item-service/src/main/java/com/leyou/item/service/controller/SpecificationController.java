@@ -77,11 +77,11 @@ public class SpecificationController {
      */
     @GetMapping("/params")
     public ResponseEntity<List<SpecificationParam>> getSpecificationParamByGroupId(@RequestParam(value = "gid", required = false) Long gid,
-                                                                                   @RequestParam(value = "cid", required = false) Long cid
-                                                                                   //@RequestParam(value = "generic", required = false) Boolean generic,
-                                                                                   //@RequestParam(value = "searching", required = false)  Boolean searching
+                                                                                   @RequestParam(value = "cid", required = false) Long cid,
+                                                                                   @RequestParam(value = "generic", required = false) Boolean generic,
+                                                                                   @RequestParam(value = "searching", required = false)  Boolean searching
     ) {
-        List<SpecificationParam> specificationParamList = specificationService.getSpecificationParamByGroupId(gid, cid);
+        List<SpecificationParam> specificationParamList = specificationService.getSpecificationParamByGroupId(gid, cid, generic, searching);
 
         if (specificationParamList.isEmpty()) {
             return ResponseEntity.notFound().build();

@@ -57,7 +57,7 @@ public class SpecificationServiceImpl implements ISpecificationService {
     }
 
     @Override
-    public List<SpecificationParam> getSpecificationParamByGroupId(Long gid, Long cid) {
+    public List<SpecificationParam> getSpecificationParamByGroupId(Long gid, Long cid, Boolean generic, Boolean searching) {
         Example example = new Example(SpecificationParam.class);
         Example.Criteria criteria = example.createCriteria();
         if (gid != null) {
@@ -68,7 +68,12 @@ public class SpecificationServiceImpl implements ISpecificationService {
             //根据分类id查询参数
             criteria.andEqualTo("cid", cid);
         }
-
+        if (generic != null) {
+            criteria.andEqualTo("generic", generic);
+        }
+        if (searching != null) {
+            criteria.andEqualTo("searching", searching);
+        }
 
         List<SpecificationParam> specificationParamList = specificationParamDao.selectByExample(example);
         return specificationParamList;

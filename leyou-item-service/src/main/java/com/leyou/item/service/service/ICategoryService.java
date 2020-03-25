@@ -30,4 +30,11 @@ public interface ICategoryService {
      * @return
      */
     List<String> getCategoryNameByIds(List<Long> ids);
+
+    /**
+     * 根据cid3查询分类全程
+     * @param id
+     * @return
+     */
+    List<Category> getCategoryNameById(Long id);
 }

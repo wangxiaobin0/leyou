@@ -83,4 +83,13 @@ public class BrandServiceImpl implements IBrandService {
         List<Brand> brandList = brandDao.getBrandByCategoryId(cid);
         return brandList;
     }
+
+    @Override
+    public List<Brand> getBrandByIds(List<Long> ids) {
+        Example example = new Example(Brand.class);
+        Example.Criteria criteria = example.createCriteria();
+        criteria.andIn("id", ids);
+        List<Brand> brandList = brandDao.selectByExample(example);
+        return brandList;
+    }
 }

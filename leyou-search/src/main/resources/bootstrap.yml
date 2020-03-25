@@ -1,0 +1,30 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /search
+
+spring:
+  application:
+    name: leyou-search
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://112.126.59.115:3344
+      label: master
+      profile: ${spring.profiles.active}
+      name: registry,zipkin
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/leyou?serverTimezone=UTC
+    username: root
+    password: 123456
+  data:
+    elasticsearch:
+      cluster-nodes: 112.126.59.115:9300
+      cluster-name: docker-cluster
+
+  main:
+    allow-bean-definition-overriding: true
+
