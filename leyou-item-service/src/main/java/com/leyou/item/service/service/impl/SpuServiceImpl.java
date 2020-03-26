@@ -80,4 +80,13 @@ public class SpuServiceImpl implements ISpuService {
         SpuDetail spuDetail = spuDetailDao.selectByPrimaryKey(spuId);
         return spuDetail;
     }
+
+    @Override
+    public Spu getSpuById(Long spuId) {
+        if(spuId == null) {
+            return null;
+        }
+        Spu spu = spuDao.selectByPrimaryKey(spuId);
+        return spu;
+    }
 }

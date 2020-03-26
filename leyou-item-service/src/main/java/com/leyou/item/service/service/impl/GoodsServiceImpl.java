@@ -1,16 +1,15 @@
 package com.leyou.item.service.service.impl;
 
 import com.leyou.item.api.bo.SpuBO;
-import com.leyou.item.api.domain.Sku;
-import com.leyou.item.api.domain.Spu;
-import com.leyou.item.api.domain.SpuDetail;
-import com.leyou.item.api.domain.Stock;
+import com.leyou.item.api.domain.*;
 import com.leyou.item.service.dao.ISkuDao;
 import com.leyou.item.service.dao.ISpuDao;
 import com.leyou.item.service.dao.ISpuDetailDao;
 import com.leyou.item.service.dao.IStockDao;
 import com.leyou.item.service.service.IGoodsService;
 import com.leyou.item.service.service.ISpuService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
@@ -18,7 +17,9 @@ import tk.mybatis.mapper.genid.GenId;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author
@@ -38,6 +39,9 @@ public class GoodsServiceImpl implements IGoodsService {
 
     @Resource
     IStockDao stockDao;
+
+    @Autowired
+    RabbitTemplate rabbitTemplate;
 
     /**
      * 1. 添加SPU
@@ -68,6 +72,8 @@ public class GoodsServiceImpl implements IGoodsService {
 
         //4. 添加Sku和Stock
         insertSkuAndStock(spuBO);
+
+        sendMessage(spuId, "insert");
     }
 
     @Override
@@ -85,6 +91,8 @@ public class GoodsServiceImpl implements IGoodsService {
         spuDao.updateByPrimaryKeySelective(spuBO);
         //4.更新SpuDetail
         spuDetailDao.updateByPrimaryKeySelective(spuBO.getSpuDetail());
+
+        sendMessage(spuBO.getId(), "update");
     }
 
     @Override
@@ -96,6 +104,7 @@ public class GoodsServiceImpl implements IGoodsService {
         spuDao.deleteByPrimaryKey(spuId);
         //  3.删除SpuDetail
         spuDetailDao.deleteByPrimaryKey(spuId);
+        sendMessage(spuId, "delete");
     }
 
     void deleteSkuAndStock(Long spuId) {
@@ -130,6 +139,21 @@ public class GoodsServiceImpl implements IGoodsService {
             stock.setSkuId(sku.getId());
             stock.setStock(sku.getStock());
             stockDao.insertSelective(stock);
+        }
+    }
+
+    /**
+     * 消息驱动
+     * @param spuId 商品id
+     * @param type 操作类型. insert,update,delete
+     */
+    public void sendMessage(Long spuId, String type) {
+        try {
+            GoodsMessage goodsMessage = new GoodsMessage(spuId, type);
+            rabbitTemplate.convertAndSend("leyou.item." + type, goodsMessage);
+            System.out.println("发送消息成功:" + goodsMessage);
+        } catch (RuntimeException e) {
+            System.out.println(type + ":" +spuId + "-----发送失败-----");
         }
     }
 }

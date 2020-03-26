@@ -1,6 +1,7 @@
 package com.leyou.search.api;
 
 import com.leyou.common.api.domain.PageResult;
+import com.leyou.item.api.domain.Spu;
 import com.leyou.item.api.domain.SpuDetail;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,7 @@ public interface ISpuApi {
                                                      @RequestParam("rows") Integer rows);
     @GetMapping("/detail/{spuId}")
     public ResponseEntity<SpuDetail> getSpuDetail(@PathVariable("spuId") Long spuId);
+
+    @GetMapping("/{spuId}")
+    public Spu getSpuById(@PathVariable("spuId") Long spuId);
 }

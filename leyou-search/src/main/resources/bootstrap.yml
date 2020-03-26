@@ -24,6 +24,12 @@ spring:
     elasticsearch:
       cluster-nodes: 112.126.59.115:9300
       cluster-name: docker-cluster
+  rabbitmq:
+    host: 112.126.59.115
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
 
   main:
     allow-bean-definition-overriding: true

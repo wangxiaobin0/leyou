@@ -31,11 +31,30 @@ public interface IBrandService {
      */
     void postBrand(Brand brand, List<Long> cids);
 
+    /**
+     * 删除品牌
+     * @param bid
+     */
     void deleteBrand(Long bid);
 
+    /**
+     * 更新品牌
+     * @param brand
+     * @param cids
+     */
     void putBrand(Brand brand, List<Long> cids);
 
+    /**
+     * 根据分类Id获取品牌集合
+     * @param cid
+     * @return
+     */
     List<Brand> getBrandByCategoryId(Long cid);
 
+    /**
+     * 根据Id集合获取品牌集合
+     * @param ids
+     * @return
+     */
     List<Brand> getBrandByIds(List<Long> ids);
 }

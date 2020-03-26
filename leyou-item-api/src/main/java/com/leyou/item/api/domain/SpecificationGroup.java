@@ -37,6 +37,6 @@ public class SpecificationGroup implements Serializable {
     @Column(name = "name")
     private String name;
 
-    //@Transient
-    //private List<SpecificationParam> specificationParamList;
+    @Transient
+    private List<SpecificationParam> params;
 }

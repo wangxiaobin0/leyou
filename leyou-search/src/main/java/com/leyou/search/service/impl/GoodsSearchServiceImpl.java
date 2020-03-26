@@ -5,38 +5,27 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.leyou.common.api.domain.PageResult;
 import com.leyou.item.api.bo.SpuBO;
-import com.leyou.item.api.domain.Brand;
-import com.leyou.item.api.domain.Sku;
-import com.leyou.item.api.domain.SpecificationParam;
-import com.leyou.item.api.domain.SpuDetail;
+import com.leyou.item.api.domain.*;
 import com.leyou.search.api.*;
 import com.leyou.search.domain.Goods;
 import com.leyou.search.domain.SearchRequest;
 import com.leyou.search.domain.SearchResult;
 import com.leyou.search.respository.IGoodsSearchRepository;
 import com.leyou.search.service.IGoodsSearchService;
-import com.mysql.cj.Query;
-import com.mysql.cj.x.protobuf.MysqlxDatatypes;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AbstractAggregationBuilder;
 import org.elasticsearch.search.aggregations.Aggregation;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.LongTerms;
 import org.elasticsearch.search.aggregations.bucket.terms.StringTerms;
-import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
-import org.elasticsearch.search.sort.SortBuilders;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilter;
-import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -336,5 +325,19 @@ public class GoodsSearchServiceImpl implements IGoodsSearchService {
             }
         }
         return result;
+    }
+
+    @Override
+    public void postAndPutGoods(Long id) throws JsonProcessingException {
+        Spu spu = spuApi.getSpuById(id);
+        SpuBO spuBO = new SpuBO();
+        BeanUtils.copyProperties(spu, spuBO);
+        Goods goods = getGoodsBySpu(spuBO);
+        goodsSearchRepository.save(goods);
+    }
+
+    @Override
+    public void deleteGoods(Long id) {
+        goodsSearchRepository.deleteById(id);
     }
 }

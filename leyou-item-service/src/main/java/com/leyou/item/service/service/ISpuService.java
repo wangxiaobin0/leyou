@@ -2,6 +2,7 @@ package com.leyou.item.service.service;
 
 import com.leyou.common.api.domain.PageResult;
 import com.leyou.item.api.bo.SpuBO;
+import com.leyou.item.api.domain.Spu;
 import com.leyou.item.api.domain.SpuDetail;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.http.ResponseEntity;
@@ -31,4 +32,11 @@ public interface ISpuService {
      * @return
      */
     public SpuDetail getSpuDetail(Long spuId);
+
+    /**
+     * 根据SpuId获取Spu
+     * @param spuId
+     * @return
+     */
+    Spu getSpuById(Long spuId);
 }
