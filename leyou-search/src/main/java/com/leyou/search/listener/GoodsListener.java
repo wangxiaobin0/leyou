@@ -25,7 +25,7 @@ public class GoodsListener {
 
 
     @RabbitListener(bindings = {
-            @QueueBinding(value = @Queue("leyou.item.put"), exchange = @Exchange(value = "leyou.item"), key = {"leyou.item.insert","leyou.item.update"})
+            @QueueBinding(value = @Queue("leyou.item"), exchange = @Exchange(value = "leyou.item"), key = {"leyou.item.insert","leyou.item.update"})
     })
     void postAndPutListener(GoodsMessage msg) throws JsonProcessingException {
         System.out.println("收到消息:修改或新增" + msg);
@@ -35,7 +35,7 @@ public class GoodsListener {
         goodsSearchService.postAndPutGoods(msg.getId());
     }
     @RabbitListener(bindings = {
-            @QueueBinding(value = @Queue("leyou.item.delete"), exchange = @Exchange(value = "leyou.item"), key = {"leyou.item.delete"})
+            @QueueBinding(value = @Queue("leyou.item"), exchange = @Exchange(value = "leyou.item"), key = {"leyou.item.delete"})
     })
     void deleteListener(GoodsMessage msg) {
         System.out.println("收到消息:删除" + msg);
