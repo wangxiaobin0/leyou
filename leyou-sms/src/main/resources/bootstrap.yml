@@ -1,0 +1,17 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: leyou-sms
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://112.126.59.115:3344
+      label: master
+      profiles: ${spring.profiles.active}
+      name: registry
+  rabbitmq:
+    host: 112.126.59.115
+  redis:
+    host: 112.126.59.115

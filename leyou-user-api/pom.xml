@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>leyou-item-api</artifactId>
+    <artifactId>leyou-user-api</artifactId>
 
     <dependencies>
         <dependency>

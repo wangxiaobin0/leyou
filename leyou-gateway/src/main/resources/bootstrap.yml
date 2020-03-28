@@ -25,6 +25,10 @@ spring:
           uri: lb://leyou-search
           predicates:
             - Path=/search/**
+        - id: leyou-user
+          uri: lb://leyou-user
+          predicates:
+            - Path=/user/**
       #全局跨域请求
       globalcors:
         #请求配置
