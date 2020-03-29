@@ -1,0 +1,21 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /cart
+
+spring:
+  application:
+    name: leyou-cart
+  profiles:
+    active: dev
+  cloud:
+    config:
+      uri: http://112.126.59.115:3344
+      label: master
+      profile: ${spring.profiles.active}
+      name: registry
+  redis:
+    host: 112.126.59.115
+leyou:
+  jwt:
+    publicKeyPath: C:\Users\dell\Desktop\rsa\rsa.pub

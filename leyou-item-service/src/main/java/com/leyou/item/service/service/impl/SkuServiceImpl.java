@@ -35,4 +35,10 @@ public class SkuServiceImpl implements ISkuService {
         }
         return skuList;
     }
+
+    @Override
+    public Sku getSkuBySkuId(Long skuId) {
+        Sku sku = skuDao.selectByPrimaryKey(skuId);
+        return sku;
+    }
 }

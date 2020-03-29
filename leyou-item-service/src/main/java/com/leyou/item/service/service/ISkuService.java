@@ -15,4 +15,11 @@ public interface ISkuService {
      * @return
      */
     List<Sku> getSkuBySpuId(Long spuId);
+
+    /**
+     * 根据SkuId查询Sku
+     * @param skuId
+     * @return
+     */
+    Sku getSkuBySkuId(Long skuId);
 }

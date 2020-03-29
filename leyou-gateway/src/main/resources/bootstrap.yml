@@ -29,18 +29,26 @@ spring:
           uri: lb://leyou-user
           predicates:
             - Path=/user/**
+        - id: leyou-auth
+          uri: lb://leyou-auth
+          predicates:
+            - Path=/auth/**
+        - id: leyou-cart
+          uri: lb://leyou-cart
+          predicates:
+            - Path=/cart/**
       #全局跨域请求
       globalcors:
         #请求配置
         cors-configurations:
           #请求URI
           '[/**]':
-            #allowCredentials: true
+            allowCredentials: true
             #允许的请求头origin
             allowedHeaders:
               - "*"
             allowedOrigins:
-              - "*"
+              - "http://127.0.0.1:9003"
             allowedMethods:
               - GET
               - POST

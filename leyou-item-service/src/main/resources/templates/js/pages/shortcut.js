@@ -45,8 +45,8 @@ const shortcut = {
         }
     },
     created() {
-        ly.http("/auth/verify")
-            .then(resp => {
+        ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
+            .then(res => {
                 this.user = resp.data;
             })
     },

@@ -45,5 +45,7 @@ public class GoodsController {
     public ResponseEntity deleteGoods(@PathVariable("spuId") Long spuId) {
         goodsService.deleteGoods(spuId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+
+
     }
 }

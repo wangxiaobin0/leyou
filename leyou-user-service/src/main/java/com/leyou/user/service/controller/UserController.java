@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping("/query")
-    public ResponseEntity queryUser(@RequestParam("username") String username, @RequestParam("password") String password) {
+    public ResponseEntity<User> queryUser(@RequestParam("username") String username, @RequestParam("password") String password) {
         User user = userService.queryUser(username, password);
         if (user == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();

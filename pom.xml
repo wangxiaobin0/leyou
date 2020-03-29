@@ -20,6 +20,9 @@
         <module>leyou-user-service</module>
         <module>leyou-user-api</module>
         <module>leyou-sms</module>
+        <module>leyou-auth-api</module>
+        <module>leyou-auth-service</module>
+        <module>leyou-cart</module>
     </modules>
     <packaging>pom</packaging>
 

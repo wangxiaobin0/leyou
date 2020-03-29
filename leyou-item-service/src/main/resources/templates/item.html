@@ -657,15 +657,17 @@
 		},
 		methods: {
             addCart(){
-				ly.verify().then(res => {
+				//ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
+				ly.http.get("/auth/verify?token=123")
+						.then(res => {
 				    // 登陆状态下的购物车
-					ly.http.post("/cart", {skuId: this.sku.id, num: this.num}).then(res => {
-                        window.location = "http://www.leyou.com/cart.html";
+					ly.http.post("/cart/cart", {skuId: this.sku.id, num: this.num}).then(res => {
+						window.location = '/item/cart'
 					});
 				}).catch(()=>{
 				    // 未登录状态的购物车
 					// 查询已有的购物车
-					const carts = ly.store.get("LY_CART") || [];
+					const carts = ly.store.get("carts") || [];
 					// 查看有没有该条记录
 					let cart = carts.find(cart => cart.skuId == this.sku.id);
 					// 判断cart是否为null
@@ -681,10 +683,10 @@
                             ownSpec: this.sku.ownSpec
 						})
 					}
-					ly.store.set("LY_CART", carts);
+					ly.store.set("carts", carts);
 
 					// 跳转到购物车页面
-					window.location = "http://www.leyou.com/cart.html";
+					window.location = '/item/cart'
 				})
 			},
             plus(){
