@@ -37,6 +37,10 @@ spring:
           uri: lb://leyou-cart
           predicates:
             - Path=/cart/**
+        - id: leyou-order
+          uri: lb://leyou-order
+          predicates:
+            - Path=/order/**
       #全局跨域请求
       globalcors:
         #请求配置
@@ -60,6 +64,6 @@ spring:
       #uri: http://localhost:3344
       label: master
       profile: ${spring.profiles.active}
-      name: registry,zipkin
+      name: registry
 
 

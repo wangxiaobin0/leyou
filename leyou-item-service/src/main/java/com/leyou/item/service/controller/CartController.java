@@ -13,4 +13,8 @@ public class CartController {
     public String goToCart() {
         return "cart";
     }
+    @RequestMapping("/order")
+    public String goToOrderInfo() {
+        return "getOrderInfo";
+    }
 }

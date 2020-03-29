@@ -23,6 +23,7 @@
         <module>leyou-auth-api</module>
         <module>leyou-auth-service</module>
         <module>leyou-cart</module>
+        <module>leyou-order</module>
     </modules>
     <packaging>pom</packaging>
 

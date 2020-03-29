@@ -44,11 +44,12 @@
                         <div class="cart-list">
                             <ul class="goods-list yui3-g" v-for="(cart, i) in carts" :key="i">
                                 <li class="yui3-u-1-24">
-                                    <input type="checkbox" name="" value="" />
+                                    <input type="checkbox" name="" value=""/>
                                 </li>
                                 <li class="yui3-u-11-24">
                                     <div class="good-item">
-                                        <div class="item-img"><img src="img/goods.png" width="80px" height="80px"/></div>
+                                        <div class="item-img"><img src="img/goods.png" width="80px" height="80px"/>
+                                        </div>
                                         <div class="item-msg">
 												<span>
                                                     {{cart.title}}<br>
@@ -60,15 +61,18 @@
                                     </div>
                                 </li>
 
-                                <li class="yui3-u-1-8"><span style="line-height:70px " class="price">{{ly.formatPrice(cart.price)}}</span></li>
+                                <li class="yui3-u-1-8"><span style="line-height:70px " class="price">{{ly.formatPrice(cart.price)}}</span>
+                                </li>
                                 <li class="yui3-u-1-8" style="padding-top: 20px">
                                     <a href="javascript:void(0)" class="increment mins" @click="decrement(cart)">-</a>
-                                    <input autocomplete="off" type="text" value="1" minnum="1" v-model="cart.num" class="itxt" />
+                                    <input autocomplete="off" type="text" value="1" minnum="1" v-model="cart.num"
+                                           class="itxt"/>
                                     <a href="javascript:void(0)" class="increment plus" @click="increment(cart)">+</a>
                                 </li>
-                                <li class="yui3-u-1-8"><span style="line-height:70px " class="sum">{{ly.formatPrice(cart.price * cart.num)}}</span></li>
+                                <li class="yui3-u-1-8"><span style="line-height:70px " class="sum">{{ly.formatPrice(cart.price * cart.num)}}</span>
+                                </li>
                                 <li class="yui3-u-1-8">
-                                    <a href="#none" @click="deleteCart(i)">删除</a><br />
+                                    <a href="#none" @click="deleteCart(i)">删除</a><br/>
                                     <a href="#none">移到我的关注</a>
                                 </li>
                             </ul>
@@ -94,7 +98,7 @@
                         <span><em>已节省：</em><i>-¥20.00</i></span>
                     </div>
                     <div class="sumbtn">
-                        <a class="sum-btn"  href="getOrderInfo.html"  target="_blank">结算</a>
+                        <a class="sum-btn" href="getOrderInfo.html" @click="toToPayPage()">结算</a>
                     </div>
                 </div>
             </div>
@@ -277,23 +281,31 @@
             async loadCarts() {
                 // 先判断登录状态
                 ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
-                //ly.http.get("/auth/verify?token=123")
+                    //ly.http.get("/auth/verify?token=123")
                     .then(res => {
-                    // 已登录
+                        // 已登录
                         var cartList1 = ly.store.get("carts") || [];
                         if (cartList1.length > 0) {
-                            for (var i =0; i< cartList1.length; i++) {
+                            for (var i = 0; i < cartList1.length; i++) {
                                 var cart = cartList1[i];
                                 ly.http.post("/cart/cart", {skuId: cart.skuId, num: cart.num})
+                                if (i == cartList1.length - 1) {
+                                    ly.http.get("/cart/cart").then(({data}) => {
+                                        // 已登录
+                                        this.carts = data;
+                                        this.selected = data;
+                                    });
+                                    ly.store.del("carts");
+                                }
                             }
-                            ly.store.del("carts");
+                        } else {
+                            ly.http.get("/cart/cart").then(({data}) => {
+                                // 已登录
+                                this.carts = data;
+                                this.selected = data;
+                            });
                         }
-                        ly.http.get("/cart/cart").then(({data}) => {
-                            // 已登录
-                            this.carts = data;
-                            this.selected = data;
-                        });
-                }).catch(() => {
+                    }).catch(() => {
                     // 未登录
                     this.carts = ly.store.get("carts") || [];
                     this.selected = this.carts;
@@ -302,12 +314,12 @@
             increment(c) {
                 c.num++;
                 // 先判断登录状态
-                //ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
-                ly.http.get("/auth/verify?token=123")
-                        .then(res => {
-                    // 已登录
-                            ly.http.put("/cart/cart", {skuId:c.skuId,num:c.num});
-                }).catch(() => {
+                ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
+                    //ly.http.get("/auth/verify?token=123")
+                    .then(res => {
+                        // 已登录
+                        ly.http.put("/cart/cart", {skuId: c.skuId, num: c.num});
+                    }).catch(() => {
                     // 未登录
                     ly.store.set("carts", this.carts);
                 })
@@ -318,26 +330,38 @@
                 }
                 c.num--;
                 // 先判断登录状态
-                ly.http.get("/auth/verify")
-                //ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
+                //ly.http.get("/auth/verify")
+                ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
                     .then(res => {
-                    // 已登录
-                        ly.http.put("/cart/cart", {skuId:c.skuId,num:c.num});
-                }).catch(() => {
+                        // 已登录
+                        ly.http.put("/cart/cart", {skuId: c.skuId, num: c.num});
+                    }).catch(() => {
                     // 未登录
                     ly.store.set("carts", this.carts);
                 })
             },
             deleteCart(i) {
-                ly.http.get("/auth/verify")
-                //ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
+                //ly.http.get("/auth/verify")
+                ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
                     .then(res => {
-                    // 已登录
-                        ly.http.delete("/cart/cart/"+ this.carts[i].skuId);
-                }).catch(() => {
+                        // 已登录
+                        ly.http.delete("/cart/cart/" + this.carts[i].skuId);
+                    }).catch(() => {
                     // 未登录
                     this.carts.splice(i, 1);
                     ly.store.set("carts", this.carts);
+                })
+            },
+            toToPayPage() {
+                //ly.http.get("/auth/verify")
+                ly.http.get("/auth/verify?token=eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MjksInVzZXJuYW1lIjoiZ3Vlc3QiLCJleHAiOjE1OTczODM3ODR9.H4--TV4LCjTdfGhhhLrzKWdmAh_hMIUl2_ZclKeuBGdL8RHHXa502n3TEnbEXag_cNOs0h6u_GaISOn0i4E0Ns1fnyJoL3R9fHHqDozUfrTjl5pJUwNNzJ-yrgCz4hJ_G1yQewPC23RL-MIRnWnjd4s8nmZbT5aA6lma820N4jc")
+                    .then(res => {
+                        // 已登录
+                        ly.store.set("leyou_select", this.selected);
+                        window.location = "/item/order";
+                    }).catch(() => {
+                    // 未登录
+                    window.location = "http://127.0.0.1:9003/login.html?returnUrl=http://127.0.0.1:9527/item/orderInfo"
                 })
             }
         },
@@ -348,12 +372,13 @@
 </script>
 <!-- 底部栏位 -->
 <!--页面底部，由js动态加载-->
-<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js" th:src="@{/js/plugins/jquery/jquery.min.js}"></script>
+<script type="text/javascript" src="/js/plugins/jquery/jquery.min.js"
+        th:src="@{/js/plugins/jquery/jquery.min.js}"></script>
 <div class="clearfix footer"></div>
-<script type="text/javascript">$(".footer").load("foot.html");</script>
 <!--页面底部END-->
 <script type="text/javascript" src="js/widget/nav.js" th:src="@{/js/widget/nav.js}"></script>
-<script type="text/javascript" src="/js/plugins/jquery.easing/jquery.easing.min.js" th:src="@{/js/plugins/jquery.easing/jquery.easing.min.js}"></script>
+<script type="text/javascript" src="/js/plugins/jquery.easing/jquery.easing.min.js"
+        th:src="@{/js/plugins/jquery.easing/jquery.easing.min.js}"></script>
 <script type="text/javascript" src="/js/plugins/sui/sui.min.js" th:src="@{/js/plugins/sui/sui.min.js}"></script>
 
 

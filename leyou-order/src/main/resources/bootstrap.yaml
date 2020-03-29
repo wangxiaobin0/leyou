@@ -1,0 +1,54 @@
+server:
+  port: 8089
+
+spring:
+  application:
+    name: leyou-order
+  profiles:
+    active: dev
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mysql://127.0.0.1:3306/leyou?serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+  rabbitmq:
+    host: 112.126.59.115
+    template:
+      retry:
+        enabled: true
+        initial-interval: 10000ms
+        max-interval: 300000ms
+        multiplier: 2
+      exchange: leyou.item
+    publisher-confirm-type: correlated
+  redis:
+    host: 112.126.59.115
+  cloud:
+    config:
+      uri: http://112.126.59.115:3344
+      label: master
+      profile: ${spring.profiles.active}
+      name: registry
+
+mybatis:
+  type-aliases-package: com.leyou.item.pojo
+  mapper-locations: mapper/OrderMapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+mapper:
+  not-empty: false
+  identity: mysql
+leyou:
+  worker:
+    workerId: 1
+    datacenterId: 1
+  jwt:
+    pubKeyPath: C:\Users\dell\Desktop\rsa\rsa.pub # 公钥地址
+    cookieName: LY_TOKEN # cookie的名称
+  pay:
+    appId: wx8397f8696b538317
+    mchId: 1473426802
+    key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+    connectTimeoutMs: 5000
+    readTimeoutMs: 10000
