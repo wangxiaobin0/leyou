@@ -45,7 +45,7 @@
         <!--PageHelper-->
         <pagehelper.version>1.2.13</pagehelper.version>
         <!--MySQL-->
-        <mysql.version>8.0.19</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <!--Druid-->
         <druid.version>1.1.21</druid.version>
         <!--Lombok-->
